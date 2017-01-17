@@ -1,0 +1,288 @@
+<!--
+This file contains the loader that load all the products catalog and the HTML pages for the different demo parts.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NeoWize Demo</title>
+    <link rel="shortcut icon" type="image/png" href="images/neowize/logo_circle.png"/>
+
+    <!-- loader engine javascripts -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/neowize/url_dict.js"></script>
+    <script type="text/javascript" src="js/neowize/demo_engine_shared.js"></script>
+    <script type="text/javascript" src="js/neowize/demo_engine_master.js"></script>
+    <script type="text/javascript" src="js/neowize/static_profiles.js"></script>
+    <script type="text/javascript" src="js/neowize/catalog.min.js"></script>
+    <script type="text/javascript" src="js/neowize/catalog_utils.js"></script>
+
+    <!-- loader stylesheet & bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/neowize/demo_ui_wrapper.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/animate.css" rel="stylesheet" type="text/css" media="all" />
+
+</head>
+<body>
+    <!-- main iframe that contains the demo site pages -->
+    <iframe id="site-content-frame" src="store_index.html" class="demo-container">
+        Error: Your browser doesn't support iframes.. Please use a different browser to view the demo.
+    </iframe>
+
+    <script>
+        // sending loaded event
+        DemoSite.gaEvent("demo_loaded");
+    </script>
+
+    <!-- white scan effect that go over the screen when profile changes  -->
+    <img src="images/neowize/effectw.png" id="scan-effect" style="position:fixed; width:100%; top:-120px; height:1200px; display:none;">
+
+    <!-- demo toolbar -->
+    <div class="row top-bar">
+
+        <!-- neowize logo + link to site.
+        (note: hidden on super small screens, because there's an alternative logo posing as a profile button in the profile buttons div for that.) -->
+        <div class="hidden-xs" style="display:inline-block; position:absolute; z-index:1000;">
+            <a target="_blank" href="http://www.neowize.com/" onclick="DemoSite.gaEvent('clicked_on_corner_logo');">
+                <div class="neowize-logo-container">
+                    <figure>
+                        <img class="neowize-logo" src="images/neowize/logo.png" />
+                    </figure>
+                </div>
+            </a>
+        </div>
+
+        <!-- profile buttons -->
+        <div class="align-center-md" style="position:absolute; padding:0; width:100%; top:0px; left:0px;">
+            <a target="_blank" href="http://www.neowize.com/" class="visible-xs-inline" onclick="DemoSite.gaEvent('clicked_on_corner_logo');"><img class="profile-button" src="images/neowize/logo_square.png" /></a>
+            <span id="see-site-as" class="hidden-no-hd engraved stretched-text noselect" style="font-family:'OleoScript-Regular';">See the site as..</span>
+            <img class="profile-button profile active" id="profile-0" src="images/neowize/profile.png" />
+            <img class="profile-button profile" id="profile-1" src="images/neowize/profile_1.png" />
+            <img class="profile-button profile" id="profile-2" src="images/neowize/profile_2.png" />
+            <img class="profile-button profile" id="profile-3" src="images/neowize/profile_3.png" />
+            <img id="profiles-arrow" style="position:fixed; left:calc(50% + 325px); top:0px; z-index:999999; display:none; height:200px;" src="images/neowize/arrow.png" class="hidden-no-hd animated pulse infinite">
+        </div>
+
+        <!-- init profiles tooltip text -->
+        <script>
+            var profilesCount = 4;
+            $(".profile").mouseenter(function() {
+                $(".profile-desc").hide();
+                $("#" + this.id + "-data").fadeIn(250);
+            });
+            $(".profile").mouseleave(function() {
+                $(".profile-desc").hide();
+            });
+            $(".profile").click(function() {
+                $(".profile").removeClass("active");
+                $(this).addClass("active");
+                $(".profile-desc").slideUp();
+                DemoSite.selectProfile(parseInt(this.id.split("-")[1]));
+            });
+        </script>
+
+        <!-- start now! call to action button -->
+        <button type="button" class="btn btn-lg btn-primary col-xs-2 hidden-xxs" data-toggle="modal" data-target="#start-now-modal" onclick="DemoSite.gaEvent('clicked_on_start_today');" style="position:absolute; right:10px; height:100%; top:0px; width: 170px;">Start Today!</button>
+        <div style="clear:both;"></div>
+    </div>
+
+    <!-- profile 0 (aka no neowize) data -->
+    <div class="modal-dialog profile-desc" id="profile-0-data" style="display:none;">
+        <div class="modal-content" style="z-index:1000000;">
+            <div class="modal-header">
+                <h4 class="modal-title">Original</h4>
+            </div>
+            <div class="modal-body">
+                <p>Click to see what the store looks like for a new user.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- profile 1 data -->
+    <div class="modal-dialog profile-desc" id="profile-1-data" style="display:none;">
+        <div class="modal-content" style="z-index:1000000;">
+            <div class="modal-header">
+                <h4 class="modal-title">Emily</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    19 years old, from New York. Using an IPhone 6 and was interested in these items:
+                    <br /><br />
+                    <img data-src="catalog/product/a/d/ad41903a_3_1.jpg" class="img-responsive catalog-img" style="display:inline-block;" width="100" >
+                    <img data-src="catalog/product/s/t/std10266_2_1.jpg" class="img-responsive catalog-img" style="display:inline-block;" width="100" >
+                    <img data-src="catalog/product/s/t/sts6189_2_1.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <br /><br />
+                    Click to see the store through her eyes...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- profile 2 data -->
+    <div class="modal-dialog profile-desc" id="profile-2-data" style="display:none;">
+        <div class="modal-content" style="z-index:1000000;">
+            <div class="modal-header">
+                <h4 class="modal-title">Virginia</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    38 years old, from London. Using a desktop computer and was interested in these items:
+                    <br /><br />
+                    <img data-src="catalog/product/a/s/as42128_1_2_1.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <img data-src="catalog/product/s/t/std8867_1_3.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <img data-src="catalog/product/s/t/sts6224_2_1.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <img data-src="catalog/product/s/2/s2072a_2_2.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <br /><br />
+                    Click to see the store through her eyes...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- profile 3 data -->
+    <div class="modal-dialog profile-desc" id="profile-3-data" style="display:none;">
+        <div class="modal-content" style="z-index:1000000;">
+            <div class="modal-header">
+                <h4 class="modal-title">Ashley</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    25 years old, from San Francisco. Using an IPad and was interested in these items:
+                    <br /><br />
+                    <img data-src="catalog/product/s/t/std8571_1_3.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <img data-src="catalog/product/d/4/d4495_4_1.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <img data-src="catalog/product/s/t/stt11132_1_1.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <img data-src="catalog/product/s/2/s2059_2_2.jpg" class="img-responsive catalog-img" style="display:inline-block" width="100" >
+                    <br /><br />
+                    Click to see the store through her eyes...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- the "Start now" dialog -->
+    <div id="start-now-modal" class="modal fade" style="top: 100px;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Start Now!</h4>
+          </div>
+          <div class="modal-body">
+            <p>To start with NeoWize please
+                <script>
+                    function OpenTab(url)
+                    {
+                        var win = window.open(url, '_blank');
+                        win.focus();
+                    }
+                </script>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="DemoSite.gaEvent('clicked_on_schedule_skype'); OpenTab('https://calendly.com/neowize/30min/');">Schedule a Skype</button>
+                or
+              <button type="button" class="btn btn-success" data-dismiss="modal" onclick="DemoSite.gaEvent('clicked_on_contact_us'); OpenTab('http://www.neowize.com/contact-US/');">Contact Us</button> via form.
+              </p>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- the intro modal when starting demo / going to "home" page -->
+    <div id="intro-modal" class="modal fade" data-backdrop="static" data-keyboard="false" style="top: 100px;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Welcome to the NeoWize Demo Store!</h4>
+            </div>
+            <div class="modal-body">
+With NeoWize, every visitor sees different products, specifically tailored to their tastes.<br /><br />
+
+To get a feel for how our technology works, you'll be able to browse the category pages of our demo store through the eyes of different people and see the changes yourself... <br /><br />
+                <button type="button" class="btn btn-primary" onclick="startDemoButton();">Start In Tops</button>
+                <script>
+                    function startDemoButton()
+                    {
+                        // send google event
+                        DemoSite.gaEvent("clicked_on_start");
+
+                        // go to tops page
+                        $('#site-content-frame').attr('src', 'products.html?cat=Tops');
+
+                        // hide the intro modal and show next
+                        $('#intro-modal').modal('hide');
+                        $('#profile-buttons-intro').modal();
+                        $("#profiles-arrow").show();
+                        $(".top-bar").css("z-index", 100000000);
+
+                        // show profile buttons highlight animation
+                        setTimeout(function() {
+                            DemoSite.highlightProfileButtons();
+                        }, 3000);
+
+                        // add additional profile buttons animation every 12 seconds
+                        if (!DemoSite._profileButtonsHighlightTimer)
+                        {
+                            DemoSite._profileButtonsHighlightTimer = setInterval(DemoSite.highlightProfileButtons, 12000);
+                        }
+                    }
+
+                    // when profile button clicked we hide the profiles into modal
+                    $(".top-bar").on("click", function() {
+                        $('#profile-buttons-intro').modal('hide');
+                        $("#profiles-arrow").hide();
+                    });
+                </script>
+            </p>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- the dialog we show when user clicked on an item -->
+    <div id="clicked-on-item" class="modal fade" style="top: 100px;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Welcome to the NeoWize Demo Store!</h4>
+            </div>
+            <div class="modal-body">
+                This is only a demo store, so you can't actually buy anything. <br />
+                Upon request we can schedule a demo for our other features, including related items.
+            </p>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- the dialog we show on first category page to notify the user to click on the profile pages -->
+    <div id="profile-buttons-intro" data-backdrop="static" data-keyboard="false" class="modal fade" style="top: 100px;">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#profiles-arrow').hide(); DemoSite.gaEvent('closed_profile_buttons_intro');">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">User Profiles</h4>
+                </div>
+                <div class="modal-body">
+                    Try to click on a different profile to see the site through their eyes!
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- auto-focus on the start-now modal once opened. -->
+    <script>
+    $('#start-now-modal').on('shown.bs.modal', function () {
+      $('#start-now-modal').focus()
+    })
+    </script>
+
+    <!-- include bootstrap js -->
+    <script type="text/javascript" src="js/bootstrap.3.3.7.min.js"></script>
+
+</body>
+</html>

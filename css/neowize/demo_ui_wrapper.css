@@ -1,0 +1,260 @@
+/**
+* Stylesheet for index.html, eg the html page that contains the 'master' code and wrap the iframe with the demo.
+*/
+
+@font-face {
+    font-family: 'OleoScript-Regular';
+    src:url(../../fonts/OleoScript-Regular.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Roboto-Regular';
+    src:url(../../fonts/Roboto-Regular.ttf) format('truetype');
+}
+
+/* style body to make everything fullscreen */
+body
+{
+    margin: 0;
+    padding: 0;
+}
+
+/* un-selectable text */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+  cursor:default;
+}
+
+/* demo top bar with options and neowize buttons */
+.top-bar
+{
+    height: 74px;
+    width: 100%;
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    left: 0px;
+    top: 2px;
+    background: white;
+    z-index: 100;
+    border-bottom: solid 1px #fd6d52;
+
+    /* unselectable */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                          not supported by any browser */
+}
+
+/* on small screens, where there's a fear some of the bar buttons will go line down, hide them. */
+@media screen and (max-width: 420px) {
+    .top-bar
+    {
+        overflow: hidden;
+    }
+}
+
+/* the iframe that actually contains the demo site */
+.demo-container
+{
+    position: fixed;
+    top: 76px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    height: calc(100% - 76px);
+    border: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* top bar neowize logo */
+.neowize-logo
+{
+    width: auto;
+    height: 70px;
+    position: relative;
+    left: 5px;
+}
+
+.neowize-logo-container
+{
+    overflow: hidden;
+    /*width: 220px;*/
+    height: 68px;
+    display: inline-block;
+}
+
+/* Shine effect for neowize logo */
+.neowize-logo-container figure {
+	position: relative;
+}
+.neowize-logo-container figure::before {
+	position: absolute;
+	top: 0;
+	left: -75%;
+	z-index: 2;
+	display: block;
+	content: '';
+	width: 50%;
+	height: 100%;
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,.7) 100%);
+	background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.7) 100%);
+	-webkit-transform: skewX(-25deg);
+	transform: skewX(-25deg);
+}
+.neowize-logo-container figure:hover::before {
+	-webkit-animation: shine .75s;
+	animation: shine .75s;
+}
+@-webkit-keyframes shine {
+	100% {
+		left: 125%;
+	}
+}
+@keyframes shine {
+	100% {
+		left: 125%;
+	}
+}
+
+/* demo profile button */
+.profile-button {
+    border-radius: 50%;
+    height: 70px;
+    width: auto;
+    cursor: pointer;
+    margin-right: 2.4%;
+    margin-left: 2.4%;
+    border: solid 1px #fd6d52;
+    transition: all .2s ease-in-out;
+    transform: scale(0.9);
+}
+@media screen and (max-width: 952px) {
+    .profile-button {
+        margin-right: 1.25% !important;
+        margin-left: 1.25% !important;
+    }
+}
+@media screen and (max-width: 790px) {
+    .profile-button {
+        margin-right: 0.55% !important;
+        margin-left: 0.55% !important;
+    }
+}
+@media screen and (max-width: 640px) {
+    .profile-button {
+        margin-right: 0.2% !important;
+        margin-left: 0.4% !important;
+    }
+}
+.profile-button:hover {
+    transform: scale(1.015);
+    opacity: 0.75;
+}
+
+/* currently active profile button */
+.profile-button.active {
+    transform: scale(1.015);
+    border: solid 3px #3c96fa;
+    opacity: 0.75;
+}
+
+/* class to align to center only for medium+ screens */
+@media screen and (min-width: 768px) {
+    .align-center-md
+    {
+        text-align: center !important;
+    }
+}
+
+/* visible only on very small devices */
+.visible-xxs
+{
+    display: none;
+}
+
+/* add extra-extra small hidden class */
+@media screen and (max-width: 620px) {
+    .hidden-xxs
+    {
+        display: none !important;
+    }
+    .visible-xxs
+    {
+        display: inline-block !important;
+    }
+}
+
+/* add extra-extra-extra small hidden class */
+@media screen and (max-width: 420px) {
+    .hidden-xxxs
+    {
+        display: none !important;
+    }
+}
+
+/* entities to hide when not in hd */
+@media screen and (max-width: 1070px) {
+    .hidden-no-hd
+    {
+        display: none !important;
+    }
+}
+
+/* tooltip class */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* extra styling for a profile description (its a bootstrap modal) */
+.profile-desc
+{
+    top: 46px;
+}
+
+/* engraved-like text */
+.engraved {
+    font-size: 130%;
+    color: #fd6c51;
+    text-shadow: 0px 1px 0px rgb(60, 152, 250);
+}
+
+/* text stretched on Y axis */
+.stretched-text {
+    display:inline-block;
+    -webkit-transform:scale(1,1.6); /* Safari and Chrome */
+    -moz-transform:scale(1,1.6); /* Firefox */
+    -ms-transform:scale(1,1.6); /* IE 9 */
+    -o-transform:scale(1,1.6); /* Opera */
+    transform:scale(1,1.6); /* W3C */
+}
